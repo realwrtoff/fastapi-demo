@@ -23,10 +23,13 @@ class Settings(BaseSettings):
 
     MONGO_HOST: str = os.getenv('MONGO_HOST', '127.0.0.1')
     MONGO_PORT: int = int(os.getenv('MONGO_PORT', '27017'))
-    MONGO_USER: str = os.getenv('MONGO_USER', None)
-    MONGO_PASSWORD: str = os.getenv('MONGO_PASSWORD', None)
-    MONGO_DB: str = os.getenv('MONGO_DB', None)
-    MONGO_URI = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DB}'
+    MONGO_USER: str = os.getenv('MONGO_USER', '')
+    MONGO_PASSWORD: str = os.getenv('MONGO_PASSWORD', '')
+    MONGO_DB: str = os.getenv('MONGO_DB', 'test')
+    if MONGO_USER is None or len(MONGO_USER) == 0:
+        MONGO_URI = f'mongodb://{MONGO_HOST}:{MONGO_PORT}/{MONGO_DB}'
+    else:
+        MONGO_URI = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DB}'
     MONGO_XRKMM_COLLECTION: str = os.getenv('MONGO_XRKMM_COLLECTION', 'xrkmm_course')
     MONGO_XIAOHAPI_COLLECTION: str = os.getenv('MONGO_XIAOHAPI_COLLECTION', 'xiaohapi_course')
 
