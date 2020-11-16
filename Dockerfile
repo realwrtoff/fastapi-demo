@@ -4,9 +4,9 @@ RUN useradd -ms /bin/bash user
 USER user
 
 #定义时区参数
-ENV TZ=Asia/Shanghai
+# ENV TZ=Asia/Shanghai
 #设置时区
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' > /etc/timezone
+# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' > /etc/timezone
 
 ENV app /app
 ADD . ${app}
