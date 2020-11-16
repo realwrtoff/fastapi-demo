@@ -33,4 +33,4 @@ app.add_exception_handler(RequestValidationError, http422_error_handler)
 app.include_router(api_router, prefix=settings.API_PREFIX)
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host='0.0.0.0', port=8080, workers=1)
+    uvicorn.run("main:app", host='0.0.0.0', port=settings.APP_PORT, workers=settings.APP_WORKERS)

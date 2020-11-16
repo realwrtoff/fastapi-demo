@@ -30,5 +30,8 @@ class Settings(BaseSettings):
     MONGO_XRKMM_COLLECTION: str = os.getenv('MONGO_XRKMM_COLLECTION', 'xrkmm_course')
     MONGO_XIAOHAPI_COLLECTION: str = os.getenv('MONGO_XIAOHAPI_COLLECTION', 'xiaohapi_course')
 
+    APP_PORT = 8080
+    APP_WORKERS = int(os.getenv('APP_WORKERS', '1'))
+
 
 settings = Settings()
