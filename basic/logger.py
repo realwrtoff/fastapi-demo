@@ -6,6 +6,7 @@ import logging
 from types import FrameType
 from typing import cast
 from loguru import logger
+from datetime import timedelta
 
 
 class InterceptHandler(logging.Handler):
@@ -40,5 +41,5 @@ for logger_name in LOGGERS:
 logger.configure(
     handlers=[
         {"sink": sys.stdout, "level": LOGGING_LEVEL},
-        {"sink": './log/runtime.log', "level": LOGGING_LEVEL}]
+        {"sink": './log/runtime.log', "level": LOGGING_LEVEL, "rotation": timedelta(hours=1)}]
 )
