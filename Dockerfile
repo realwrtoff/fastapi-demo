@@ -8,7 +8,9 @@ RUN yum -y install epel-release gcc \
     && yum -y install python36u-pip \
     && yum -y install python36u-devel \
     # clean up cache
-    && yum -y clean all
+    && yum -y clean all \
+    && mkdir -p /app/log \
+    && mkdir -p /app/data
 
 COPY requirements.txt /requirements.txt
 RUN pip3 install -r /requirements.txt -i http://pypi.tuna.tsinghua.edu.cn/simple/ --trusted-host pypi.tuna.tsinghua.edu.cn
