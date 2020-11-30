@@ -32,6 +32,7 @@ class Settings(BaseSettings):
         MONGO_URI = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DB}'
     MONGO_XRKMM_COLLECTION: str = os.getenv('MONGO_XRKMM_COLLECTION', 'xrkmm_course')
     MONGO_XIAOHAPI_COLLECTION: str = os.getenv('MONGO_XIAOHAPI_COLLECTION', 'xiaohapi_course')
+    COMPANY_COLLECTION: str = os.getenv('COMPANY_COLLECTION', 'company')
 
     APP_PORT = 8080
     APP_WORKERS = int(os.getenv('APP_WORKERS', '1'))

@@ -11,5 +11,6 @@ async def connect_mongo():
     mgo_collections = {
         settings.MONGO_XRKMM_COLLECTION: mgo_db[settings.MONGO_XRKMM_COLLECTION],
         settings.MONGO_XIAOHAPI_COLLECTION: mgo_db[settings.MONGO_XIAOHAPI_COLLECTION],
+        settings.COMPANY_COLLECTION: mgo_db[settings.COMPANY_COLLECTION],
     }
     return mgo_client, mgo_collections
