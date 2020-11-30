@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
+import math
 from typing import Optional
 from fastapi import APIRouter, Depends
 from basic import deps, response_code
@@ -25,6 +25,8 @@ async def company_list(
         query['province'] = province
     if len(city) > 0:
         query['city'] = city
+    count = await mgo_collections[collection].count_documents(query)
+    pages = math.ceil(count/page_size)
     out_fields = {
         '_id': 0,
         'companyId': 1,
@@ -43,7 +45,12 @@ async def company_list(
         limit(page_size)
     async for rec in cursor:
         records.append(rec)
-    return response_code.resp_200(data=records)
+    data = {
+        'totalCount': count,
+        'totalPage': pages,
+        'list': records
+    }
+    return response_code.resp_200(data=data)
 
 
 @router.get("/{collection}/{company_id}")
