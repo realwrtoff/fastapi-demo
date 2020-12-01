@@ -16,6 +16,7 @@ async def company_list(
         city: Optional[str] = '',
         page: Optional[int] = 1,
         page_size: Optional[int] = 10,
+        check_status: Optional[int] = 0,
         mgo_collections=Depends(deps.get_mgo_collections)):
     if collection not in mgo_collections:
         return response_code.resp_4001(message=f'{collection} not support')
@@ -25,6 +26,10 @@ async def company_list(
         query['province'] = province
     if len(city) > 0:
         query['city'] = city
+    if check_status == 0:
+        query['check_status'] = {'$exists': False}
+    else:
+        query['check_status'] = check_status
     count = await mgo_collections[collection].count_documents(query)
     pages = math.ceil(count/page_size)
     out_fields = {
@@ -54,8 +59,23 @@ async def company_list(
 
 
 @router.get("/{collection}/{company_id}")
-async def company(collection: str, company_id: int, mgo_collections=Depends(deps.get_mgo_collections)):
+async def company(
+        collection: str,
+        company_id: int,
+        check_status: Optional[int] = 0,
+        mgo_collections=Depends(deps.get_mgo_collections)):
     if collection not in mgo_collections:
         return response_code.resp_4001(message=f'{collection} not support')
-    rec = await mgo_collections[collection].find_one({'companyId': company_id}, {'_id': 0})
-    return response_code.resp_200(data=rec)
+    query = {'companyId': company_id}
+    if check_status == 0:
+        # 默认查找
+        rec = await mgo_collections[collection].find_one(query, {'_id': 0})
+        return response_code.resp_200(data=rec)
+    # 更新
+    update = {'$set': {'check_status': check_status}}
+    res = await mgo_collections[collection].update_one(query, update)
+    if res.raw_result['nModified'] > 0:
+        message = 'update success'
+    else:
+        message = 'nothing updated, nModified is the update rec count'
+    return response_code.resp_200(message=message, data=res.raw_result)
