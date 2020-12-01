@@ -58,6 +58,28 @@ async def company_list(
     return response_code.resp_200(data=data)
 
 
+@router.get("/{collection}/group")
+async def aggregate(
+        collection: str,
+        fields: str,
+        mgo_collections=Depends(deps.get_mgo_collections)):
+    if collection not in mgo_collections:
+        return response_code.resp_4001(message=f'{collection} not support')
+    splits = fields.split(',')
+    dic = {}
+    for field in splits:
+        field = field.strip()
+        dic[field] = f'${field}'
+    group_dic = {
+        '$group': {
+            '_id': dic,
+            'count': {'$sum': 1}
+        }
+    }
+    rec = await mgo_collections[collection].aggregate([group_dic])
+    return response_code.resp_200(data=rec)
+
+
 @router.get("/{collection}/{company_id}")
 async def company(
         collection: str,

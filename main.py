@@ -6,6 +6,8 @@ import uvicorn
 # import gunicorn
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from config.setting import settings
 from basic.errors import http_error_handler, http422_error_handler
@@ -14,6 +16,18 @@ from db.database import connect_mongo
 from api import router as api_router
 
 app = FastAPI(docs_url=settings.DOCS_URL, openapi_url=settings.OPENAPI_URL, redoc_url=settings.REDOC_URL)
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event('startup')
