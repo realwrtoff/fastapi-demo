@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     COMPANY_COLLECTION: str = os.getenv('COMPANY_COLLECTION', 'company')
     USER_COLLECTION: str = os.getenv('USER_COLLECTION', 'user')
     ZXB_COLLECTION: str = os.getenv('ZXB_COLLECTION', 'zhixiaobing')
-    APP_PORT = 28080
+    APP_PORT = 8080
     APP_WORKERS = int(os.getenv('APP_WORKERS', '1'))
 
 
