@@ -35,6 +35,10 @@ class Settings(BaseSettings):
     COMPANY_COLLECTION: str = os.getenv('COMPANY_COLLECTION', 'company')
     USER_COLLECTION: str = os.getenv('USER_COLLECTION', 'user')
     ZXB_COLLECTION: str = os.getenv('ZXB_COLLECTION', 'zhixiaobing')
+
+    ES_HOST: str = os.getenv('ES_HOST', '127.0.0.1:9200')
+    CMCC_ES_INDEX: str = os.getenv('CMCC_ES_INDEX', 'cmcc')
+
     APP_PORT = 8080
     APP_WORKERS = int(os.getenv('APP_WORKERS', '1'))
 
