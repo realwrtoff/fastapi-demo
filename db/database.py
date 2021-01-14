@@ -4,7 +4,7 @@
 import aioredis
 import aiomysql
 from motor.motor_asyncio import AsyncIOMotorClient
-from elasticsearch import Elasticsearch
+import elasticsearch
 from config.setting import settings
 
 
@@ -32,6 +32,5 @@ async def connect_mysql():
 
 
 async def connect_es():
-    es = Elasticsearch(hosts=[settings.ES_HOST])
-    es.async_search
+    es = elasticsearch.Elasticsearch(hosts=[settings.ES_HOST])
     return es
