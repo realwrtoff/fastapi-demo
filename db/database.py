@@ -17,6 +17,7 @@ async def connect_mongo():
         settings.COMPANY_COLLECTION: mgo_db[settings.COMPANY_COLLECTION],
         settings.USER_COLLECTION: mgo_db[settings.USER_COLLECTION],
         settings.ZXB_COLLECTION: mgo_db[settings.ZXB_COLLECTION],
+        settings.MOBILE_PREFIX_COLLECTION: mgo_db[settings.MOBILE_PREFIX_COLLECTION],
     }
     return mgo_client, mgo_collections
 

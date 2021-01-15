@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     COMPANY_COLLECTION: str = os.getenv('COMPANY_COLLECTION', 'company')
     USER_COLLECTION: str = os.getenv('USER_COLLECTION', 'user')
     ZXB_COLLECTION: str = os.getenv('ZXB_COLLECTION', 'zhixiaobing')
+    MOBILE_PREFIX_COLLECTION: str = os.getenv('MOBILE_PREFIX_COLLECTION', 'mobile_prefix')
 
     ES_HOST: str = os.getenv('ES_HOST', '127.0.0.1:9200')
     CMCC_ES_INDEX: str = os.getenv('CMCC_ES_INDEX', 'cmcc')

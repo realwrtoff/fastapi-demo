@@ -9,8 +9,8 @@ from config.setting import settings
 router = APIRouter()
 
 
-@router.get("/search")
-async def cmcc_all(
+@router.get("/cmcc")
+def cmcc_search(
         mobile: Optional[int] = 0,
         name: Optional[str] = '',
         cert_id: Optional[str] = '',
@@ -34,3 +34,10 @@ async def cmcc_all(
     else:
         data = None
     return response_code.resp_200(data=data)
+
+
+@router.get("/location")
+async def mobile_location(mobile: int, mgo_collections=Depends(deps.get_mgo_collections)):
+    prefix = int(mobile / 10000) if mobile > 1999999 else mobile
+    rec = await mgo_collections[settings.MOBILE_PREFIX_COLLECTION].find_one({'prefix': prefix}, {'_id': 0})
+    return response_code.resp_200(data=rec)
